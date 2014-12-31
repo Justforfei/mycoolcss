@@ -1,4 +1,4 @@
-﻿/*透明*/
+/*透明*/
 .transparent{
 	filter:alpha(opacity=12);opacity:0.12;
 }
@@ -22,7 +22,7 @@ a:visited { color: purple; }
 a:hover { color: red; }
 a:active { color: yellow; }
 
-/*内容垂直集中*/
+/*内容垂直集中*/	
 .v-center{min-height: 1em;display: table-cell;vertical-align: middle;}
 
 /*绝对居中 假设元素宽高都为100*/

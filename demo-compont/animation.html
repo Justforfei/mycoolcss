@@ -8,6 +8,15 @@
 <link rel="stylesheet" type="text/css" media="all" href="css/animation.css"/>
 </head>
 <body>
+<!-- 按钮 -->
+	<div class="box-btn">
+		<a href="javascript:void(0);" class="close">CLOSE</a>
+		<a href="javascript:void(0);" class="refresh">Refresh</a>
+		<a href="javascript:void(0);" class="pre">Pre</a>
+		<a href="javascript:void(0);" class="next">Next</a>
+		<a href="javascript:void(0);" class="begin">Start</a>
+	</div>
+<!-- 动画 -->
 	<div class="box">
 		<div class="box-css3">
 			<div class="font-01 css3-01"></div>
@@ -18,24 +27,88 @@
 			<button class="start">开始动画</button>
 		</div>
 	</div>
+
 	<div class="box">
 		<div class="box-css3">
 			<div class="gift css3-03"></div>
 			<div class="shadow css3-04"></div>
 		</div>
 		<div class="box-intro">
-			<p class="intro">一个文字分别从两边飞入的动画</p>
+			<p class="intro">一个物体下落，有阴影的动画</p>
 			<button class="start">开始动画</button>
 		</div>
 	</div>
 <script src="js/jquery-1.10.2.js"></script>
 <script>
-	var $obtn=$(".start")
+	var $obtn=$(".start");
+	var $obtnClose=$(".close");
+	var $obtnRefresh=$(".refresh");
+	var $obtnPre=$(".pre");
+	var $obtnNext=$(".next");
+	var $obtnStart=$(".begin");
+	var $obtns=$(".box-btn a");
+	$obtnClose.click(function(){
+		$(".box-css3").css({"display":"none"});
+		$obtn.css({"background-color":"#c80000"});
+		$obtns.css({"background-color":"#ccc"});
+		return false;
+	})
 
-
+	$obtnStart.click(function(){
+		$oPos=0;
+		$obtn.eq($oPos).trigger("click");
+		return false;
+	})
 	$obtn.click(function() {
-		$obox=$(this).closest(".box").find(".box-css3");
-		$obox.css({"display":"block"});
+		$this=$(this);
+		$obox=$this.closest(".box");
+		$oboxPre=$obox.prevAll(".box");
+		$oPos=$oboxPre.size();
+		$oboxCss3s=$(".box");
+		$oPosAll=$oboxCss3s.size();
+		$oNowBox=$oboxCss3s.eq($oPos);
+		$oboxCss3=$oNowBox.find(".box-css3");
+		//按钮状态变化
+		$obtns.css({"background-color":"#c80000"});
+		$obtn.css({"background-color":"#ccc"});
+		//显示动画
+		$oboxCss3.css({"display":"block"});
+		//refresh按钮可用
+		$obtnRefresh.click(function(){
+			$oboxCss3.css({"display":"none"});
+			setTimeout(function(){
+				$oboxCss3.css({"display":"block"});
+			},10)
+		})
+		//next按钮可用
+		$obtnNext.click(function(){
+			$oboxCss3.css({"display":"none"});
+			$oPos+=1;
+			$oNowBox=$oboxCss3s.eq($oPos);
+			$oboxCss3=$oNowBox.find(".box-css3");
+			if($oPos>=0 && $oPos<$oPosAll){
+				alert("here");
+				$oboxCss3.css({"display":"block"});
+			}else{
+				$obtn.css({"background-color":"#c80000"});
+				$obtns.css({"background-color":"#ccc"});
+				alert("没有更多动画了");
+			}
+		})
+		//pre按钮可用
+		$obtnPre.click(function(){
+			$oboxCss3.css({"display":"none"});
+			$oPos-=1;
+			$oNowBox=$oboxCss3s.eq($oPos);
+			$oboxCss3=$oNowBox.find(".box-css3");
+			if($oPos>=0 && $oPos<$oPosAll){
+				$oboxCss3.css({"display":"block"});
+			}else{
+				$obtn.css({"background-color":"#c80000"});
+				$obtns.css({"background-color":"#ccc"});
+				alert("没有更多动画了")
+			}
+		})
 	})
 </script>
 </body>
